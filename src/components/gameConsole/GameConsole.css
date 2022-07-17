@@ -1,0 +1,41 @@
+.GameConsole{
+    padding: 5px;
+    display: flex;
+    flex-flow:column nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.GameConsole-title{
+    color: #ff4500;
+    font-size: 40px;
+    -webkit-text-fill-color: #00000050;
+    -webkit-text-stroke-color: #ff4500;
+    display: flex;
+    flex-flow:row nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.GameConsole-title-card{
+    width: 50%;
+    height: 90%;
+}
+
+.GameConsole-Display{
+    width: 400px;
+    min-width: 200px;
+    height: 400px;
+    min-height: 200px;
+    display: flex;
+    flex-flow:row wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px auto;
+}
+
+.GameConsole-reset{
+    width: 400px;
+    min-width: 200px;
+    height:  50px;
+}
