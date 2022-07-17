@@ -31,14 +31,63 @@ class GameConsole extends Component {
         let gameSquares = this.props.gameSquaresKeys.map(sqrId => (
             <GameSquare key={sqrId} id={sqrId} isActive={(sqrId === this.state.currSquare || this.state.currAdjSquares.includes(sqrId)) ? true : false} gameFunction={this.registerGameMove}/>
         ));
+
         return gameSquares;
     }
 
-    adjacentSquareCheck(sqrId, arr){
-        if(this.props.gameSquaresKeys.includes(sqrId)){
-            arr.push(sqrId);
-            console.log(`potential adjacents: ${arr}`)
-        }
+    // adjacentSquareCheck(sqrId, arr){
+    //     if(this.props.gameSquaresKeys.includes(sqrId)){
+    //         arr.push(sqrId);
+    //         console.log(`potential adjacents: ${arr}`)
+    //     }
+    // }
+
+    generateAdjacentSquares(potentialSqrsArr){
+        
+        let adjacentSqrs = [];
+
+        potentialSqrsArr.forEach((sqrId) => {
+            if(this.props.gameSquaresKeys.includes(sqrId)){
+                adjacentSqrs.push(sqrId);
+                console.log(`adjacentSqrs: ${adjacentSqrs}`)
+            }
+        });
+
+        return adjacentSqrs;
+    }
+
+    determineAdjacents(sqrId){
+
+        let potentialAdjacentSqrs = [];
+
+        let sqrIdElements = sqrId.split('');
+
+        let row = Number(sqrIdElements[1]);
+        let rowPlus = row + 1;
+        let rowMinus = row - 1;
+        console.log(`row: ${row} | rowPlus: ${rowPlus} | rowMinus: ${rowMinus}`);
+
+        let column = Number(sqrIdElements[3]);
+        let columnPlus = column + 1;
+        let columnMinus = column - 1;
+        console.log(`column: ${column} | columnPlus: ${columnPlus} | columnMinus: ${columnMinus}`);
+
+        let leftAdj = `r${row}c${columnMinus}`;
+        potentialAdjacentSqrs.push(leftAdj);
+
+        let rightAdj = `r${row}c${columnPlus}`;
+        potentialAdjacentSqrs.push(rightAdj);
+
+        let topAdj = `r${rowMinus}c${column}`;
+        potentialAdjacentSqrs.push(topAdj);
+
+        let bottomAdj = `r${rowPlus}c${column}`;
+        potentialAdjacentSqrs.push(bottomAdj);
+
+        let adjacents = this.generateAdjacentSquares(potentialAdjacentSqrs);
+
+        return adjacents;
+
     }
 
     registerGameMove(sqrId){
@@ -46,30 +95,32 @@ class GameConsole extends Component {
         this.setState(currState => {
             let newState = {...currState};
             newState.currSquare = sqrId;
+            newState.currAdjSquares = this.determineAdjacents(sqrId);
 
-            let sqrIdElements = sqrId.split('');
-            let row = Number(sqrIdElements[1]);
-            let rowPlus = row + 1;
-            let rowMinus = row - 1;
-            console.log(`row: ${row} | rowPlus: ${rowPlus} | rowMinus: ${rowMinus}`);
-            let column = Number(sqrIdElements[3]);
-            let columnPlus = column + 1;
-            let columnMinus = column - 1;
-            console.log(`column: ${column} | columnPlus: ${columnPlus} | columnMinus: ${columnMinus}`);
-            let potentialAdjs = [];
-            let leftAdj = `r${row}c${columnMinus}`;
-            console.log(`leftAdj: ${leftAdj}`);
-            this.adjacentSquareCheck(leftAdj, potentialAdjs);
-            let rightAdj = `r${row}c${columnPlus}`;
-            console.log(`rightAdj: ${rightAdj}`);
-            this.adjacentSquareCheck(rightAdj, potentialAdjs);
-            let topAdj = `r${rowMinus}c${column}`;
-            console.log(`topAdj: ${topAdj}`);
-            this.adjacentSquareCheck(topAdj, potentialAdjs);
-            let bottomAdj = `r${rowPlus}c${column}`;
-            console.log(`bottomAdj: ${bottomAdj}`);
-            this.adjacentSquareCheck(bottomAdj, potentialAdjs);
-            newState.currAdjSquares = potentialAdjs;
+            // let sqrIdElements = sqrId.split('');
+            // let row = Number(sqrIdElements[1]);
+            // let rowPlus = row + 1;
+            // let rowMinus = row - 1;
+            // console.log(`row: ${row} | rowPlus: ${rowPlus} | rowMinus: ${rowMinus}`);
+            // let column = Number(sqrIdElements[3]);
+            // let columnPlus = column + 1;
+            // let columnMinus = column - 1;
+            // console.log(`column: ${column} | columnPlus: ${columnPlus} | columnMinus: ${columnMinus}`);
+            // let potentialAdjs = [];
+            // let leftAdj = `r${row}c${columnMinus}`;
+            // console.log(`leftAdj: ${leftAdj}`);
+            // this.adjacentSquareCheck(leftAdj, potentialAdjs);
+            // let rightAdj = `r${row}c${columnPlus}`;
+            // console.log(`rightAdj: ${rightAdj}`);
+            // this.adjacentSquareCheck(rightAdj, potentialAdjs);
+            // let topAdj = `r${rowMinus}c${column}`;
+            // console.log(`topAdj: ${topAdj}`);
+            // this.adjacentSquareCheck(topAdj, potentialAdjs);
+            // let bottomAdj = `r${rowPlus}c${column}`;
+            // console.log(`bottomAdj: ${bottomAdj}`);
+            // this.adjacentSquareCheck(bottomAdj, potentialAdjs);
+            // newState.currAdjSquares = potentialAdjs;
+            
             return newState
         });
     }
