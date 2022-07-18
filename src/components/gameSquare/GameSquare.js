@@ -12,8 +12,12 @@ class GameSquare extends Component {
         this.props.gameFunction(this.props.id);
     }
   render() {
+
+    let squareDim = this.props.styleDim;
+    console.log(`squareDim: ${squareDim}`);
+
     return (
-      <div className={this.props.isActive ? `GameSquare GameSquare-active` : `GameSquare`} onClick={this.handleClick}></div>
+      <div className={this.props.isActive ? `GameSquare GameSquare-active` : `GameSquare`} onClick={this.handleClick} style={{width: `${squareDim}%`, height: `${squareDim}%`}}></div>
     )
   }
 }

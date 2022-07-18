@@ -1,21 +1,22 @@
+import { toHaveStyle } from '@testing-library/jest-dom/dist/matchers';
 import React, { Component } from 'react';
 import GameSquare from '../gameSquare/GameSquare';
 import './GameConsole.css';
 
 class GameConsole extends Component {
     static defaultProps = {
-        gameSquaresKeys: [
-            'r1c1','r1c2','r1c3','r1c4','r1c5',
-            'r2c1','r2c2','r2c3','r2c4','r2c5',
-            'r3c1','r3c2','r3c3','r3c4','r3c5',
-            'r4c1','r4c2','r4c3','r4c4','r4c5',
-            'r5c1','r5c2','r5c3','r5c4','r5c5',
-        ]
+        boardDimension: 5,
+        isActiveProbability: .25
     };
 
     constructor(props){
         super(props);
+
+        let boardDetails = this.generateBoard();
+
         this.state = {
+            gameBoardRegistry: boardDetails[0],
+            gameBoardDetails: boardDetails[1],
             isWinner: false,
             isLoser: false,
             isGameOver: false,
@@ -23,13 +24,79 @@ class GameConsole extends Component {
             currSquare: '',
             currAdjSquares: []
         }
+
+        this.generateBoard = this.generateBoard.bind(this);
         this.registerGameMove = this.registerGameMove.bind(this);
         this.resetGame = this.resetGame.bind(this);
+    }
+
+    generateBoard(){
+
+        let limit = this.props.boardDimension + 1;
+        let sqrStatusValues = [true, false];
+        let board = {};
+
+        for (let row = 1; row < limit; row++) {
+            for (let col = 1; col < limit; col++) {
+                let sqrId = `r${row}c${col}`;
+                let keyValue = `${row}-${col}`;
+                // let isActive = sqrStatusValues[Math.floor(Math.random()*sqrStatusValues.length)];
+                let isActive;
+                let randomFactor = Math.random();
+                if (randomFactor > this.props.isActiveProbability) {
+                    isActive = true;
+                } else {
+                    isActive = false;
+                }
+                board[sqrId] = {'sqrId': sqrId, 'keyValue': keyValue, 'row': row, 'column': col, 'isActive': isActive};
+            }
+        }
+
+        let registry = Object.keys(board);
+
+        console.log(`generateBoard registry: ${registry}`);
+        console.log(`generateBoard board: ${JSON.stringify(board)}`);
+
+        // this.setState(currState => {
+        //     let newState = {...currState};
+
+        //     newState.gameBoardRegistry = registry;
+        //     newState.gameBoardStatus = board;
+
+        //     return newState;
+        // });
+
+        // console.log(`generateBoard board: ${JSON.stringify(board)}`);
+
+        return [registry, board];
+
     }
 
     generateGameSquares(){
         let gameSquares = this.props.gameSquaresKeys.map(sqrId => (
             <GameSquare key={sqrId} id={sqrId} isActive={(sqrId === this.state.currSquare || this.state.currAdjSquares.includes(sqrId)) ? true : false} gameFunction={this.registerGameMove}/>
+        ));
+
+        return gameSquares;
+
+    }
+
+    generateGameBoardElements(){
+
+        let registry = this.state.gameBoardRegistry;
+        let gBoard = this.state.gameBoardDetails
+        let sqrDimension = (100/this.props.boardDimension) - 3;
+        // console.log(`boardDimension | sqrDimension => ${this.state.boardDimension} | ${sqrDimension}`);
+        // console.log(`generateGameBoardElements registry: ${registry}`);
+        // console.log(`generateGameBoardElements gBoard: ${JSON.stringify(gBoard)}`);
+        let gameSquares = registry.map(sqr => (
+            <GameSquare
+                key={gBoard[sqr].keyValue}
+                id={gBoard[sqr].sqrId}
+                isActive={(gBoard[sqr].sqrId === this.state.currSquare || gBoard[sqr].isActive) ? true : false}
+                styleDim={sqrDimension}
+                gameFunction={this.registerGameMove}
+            />
         ));
 
         return gameSquares;
@@ -43,11 +110,11 @@ class GameConsole extends Component {
     // }
 
     generateAdjacentSquares(potentialSqrsArr){
-        
+
         let adjacentSqrs = [];
 
         potentialSqrsArr.forEach((sqrId) => {
-            if(this.props.gameSquaresKeys.includes(sqrId)){
+            if(this.state.gameBoardRegistry.includes(sqrId)){
                 adjacentSqrs.push(sqrId);
                 // console.log(`adjacentSqrs: ${adjacentSqrs}`);
             }
@@ -91,7 +158,9 @@ class GameConsole extends Component {
     }
 
     registerGameMove(sqrId){
-        console.log(`you clicked: ${sqrId}`);
+        
+        // console.log(`you clicked: ${sqrId}`);
+
         this.setState(currState => {
             let newState = {...currState};
             newState.currSquare = sqrId;
@@ -128,6 +197,12 @@ class GameConsole extends Component {
     resetGame(){
         this.setState(currState => {
             let newState = {...currState};
+
+            let resetGameBoard = this.generateBoard();
+
+            newState.gameBoardRegistry = resetGameBoard[0];
+            newState.gameBoardDetails = resetGameBoard[1];
+
             newState.isWinner = false;
             newState.isLoser = false;
             newState.isGameOver = false;
@@ -135,12 +210,26 @@ class GameConsole extends Component {
             newState.currSquare = '';
             newState.currAdjSquares = [];
 
+
+
             return newState;
         });
     }
 
   render() {
-        let currentGameSquares = this.generateGameSquares();
+
+        // let currentGameSquares = this.generateGameSquares();
+
+        let currentGameBoard = this.generateGameBoardElements();
+
+        console.log(`registry: ${this.state.gameBoardRegistry}`);
+        console.log(`board details: ${JSON.stringify(this.state.gameBoardDetails)}`);
+
+        // let gameBoardRegistry = this.generateBoard(this.state.boardDimension);
+        // console.log(`game board registry: ${gameBoardRegistry}`);
+
+        // let currentGameBoard = this.generateGameBoardElements();
+
     return (
         <div className='GameConsole'>
             <div className='GameConsole-title'>
@@ -153,7 +242,8 @@ class GameConsole extends Component {
                 </div>
             </div>
             <div className='GameConsole-Display'>
-                {currentGameSquares}
+                {/* {currentGameSquares} */}
+                {currentGameBoard}
             </div>
             <button onClick={this.resetGame} className='GameConsole-reset'>RESET GAME</button>
         </div>
