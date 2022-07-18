@@ -1,19 +1,16 @@
 @keyframes gameSquareAtRest {
-    0%   {border-color: #ff450020;}
-    25%  {border-color: #ff450010;}
-    50%  {border-color: #ff450000;}
-    75%  {border-color: #ff450010;}
-    100% {border-color: #ff450020;}
+    0%   {border-color: #ff450020; background-color: #ff450010}
+    50%  {border-color: #ff450000; background-color: transparent}
+    100% {border-color: #ff450020; background-color: #ff450010}
 }
 
 .GameSquare{
     width: 17%;
     height: 17%;
-    background-image: linear-gradient(#ffffff10, #ffffff30, #ffffff10);
+    background-image: linear-gradient(#ffffff05, #ffffff10, #ffffff05);
     border: 5px solid transparent;
     border-radius: 5px;
-    animation-name: gameSquareAtRest;
-    animation-duration: .5s;
+    animation: gameSquareAtRest 1.5s infinite;
     margin:1px;
     opacity:.75;
     transition: .2s;

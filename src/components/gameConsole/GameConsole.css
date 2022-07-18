@@ -1,3 +1,21 @@
+@keyframes titleCard1Glow {
+    0%   {text-shadow: 0px 0px 25px #ff4500;-webkit-text-fill-color: #000000;}
+    50%  {text-shadow: 0px 0px 45px #ff4500;-webkit-text-fill-color: #ff4500;}
+    100% {text-shadow: 0px 0px 25px #ff4500;-webkit-text-fill-color: #000000;}
+}
+
+@keyframes titleCard2Glow {
+    0%   {text-shadow: 0px 0px 25px #0195ff;-webkit-text-fill-color: #0195ff00;}
+    50%  {text-shadow: 0px 0px 45px #0195ff;-webkit-text-fill-color: #0195ff;}
+    100% {text-shadow: 0px 0px 25px #0195ff;-webkit-text-fill-color: #0195ff00;}
+}
+
+@keyframes gameResetAnim {
+    0%   {text-shadow: 0px 0px 15px #0195ff;-webkit-text-stroke-color: #0195ff30; box-shadow: 0px 0px 18px #0195ff20;}
+    50%  {text-shadow: 0px 0px 25px #0195ff;-webkit-text-stroke-color: #0195ff; box-shadow: 0px 0px 24px #0195ff;}
+    100%  {text-shadow: 0px 0px 15px #0195ff;-webkit-text-stroke-color: #0195ff30; box-shadow: 0px 0px 18px #0195ff20;}
+}
+
 .GameConsole{
     padding: 5px;
     display: flex;
@@ -7,21 +25,52 @@
 }
 
 .GameConsole-title{
+    width: 400px;
+    min-width: 200px;
     color: #ff4500;
     font-size: 60px;
     display: flex;
     flex-flow:row nowrap;
     justify-content: space-around;
     align-items: center;
+    /* border: 1px solid white; */
 }
 
 .GameConsole-title-card{
-    color: #ff4500;
     font-weight: 900;
-    -webkit-text-fill-color: #00000050;
+    -webkit-text-fill-color: #000000;
+    -webkit-text-stroke: 1px;
     -webkit-text-stroke-color: #ff4500;
-    width: 50%;
+    width: 400px;
+    min-width: 200px;
     height: 90%;
+    text-align: center;
+    margin: 15px 0px;
+}
+
+.GameConsole-title-card-content{
+    width: 100%;
+    /* border: 1px solid white; */
+}
+
+.GameConsole-title-card-1{
+    width:auto;
+    color: #ff4500;
+    /* display: inline-block; */
+    -webkit-text-stroke-color: #ff4500;
+    text-shadow: 0px 0px 25px #ff4500;
+    animation: titleCard1Glow 1.5s infinite;
+    /* border: 1px solid #ff4500; */
+}
+
+.GameConsole-title-card-2{
+    width:auto;
+    color: #0195ff;
+    /* display: inline-block; */
+    -webkit-text-stroke-color: #0195ff;
+    text-shadow: 0px 0px 25px #0195ff;
+    animation: titleCard2Glow 4s infinite;
+    /* border: 1px solid #0195ff; */
 }
 
 .GameConsole-Display{
@@ -34,6 +83,7 @@
     justify-content: space-around;
     align-items: center;
     margin: 10px auto;
+    cursor: pointer;
 }
 
 .GameConsole-reset{
@@ -47,8 +97,11 @@
     font-weight: 900;
     color: #001b2d80;
     text-shadow: 0px 0px 3px #00111de4;
+    -webkit-text-stroke: 1px;
+    animation: gameResetAnim 3s infinite;
     margin-top: 20px;
     opacity: 1;
+    cursor: pointer;
     transition: .2s;
 }
 
@@ -57,6 +110,7 @@
     box-shadow: 0px 0px 30px #0195ff;
     color: #01a6ff;
     text-shadow: 0px 0px 8px #0195ff;
+    animation: none;
     opacity: 1;
     transition: .2s;
 }

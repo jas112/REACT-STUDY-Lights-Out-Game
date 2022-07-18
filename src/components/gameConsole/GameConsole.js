@@ -49,7 +49,7 @@ class GameConsole extends Component {
         potentialSqrsArr.forEach((sqrId) => {
             if(this.props.gameSquaresKeys.includes(sqrId)){
                 adjacentSqrs.push(sqrId);
-                console.log(`adjacentSqrs: ${adjacentSqrs}`)
+                // console.log(`adjacentSqrs: ${adjacentSqrs}`);
             }
         });
 
@@ -65,12 +65,12 @@ class GameConsole extends Component {
         let row = Number(sqrIdElements[1]);
         let rowPlus = row + 1;
         let rowMinus = row - 1;
-        console.log(`row: ${row} | rowPlus: ${rowPlus} | rowMinus: ${rowMinus}`);
+        // console.log(`row: ${row} | rowPlus: ${rowPlus} | rowMinus: ${rowMinus}`);
 
         let column = Number(sqrIdElements[3]);
         let columnPlus = column + 1;
         let columnMinus = column - 1;
-        console.log(`column: ${column} | columnPlus: ${columnPlus} | columnMinus: ${columnMinus}`);
+        // console.log(`column: ${column} | columnPlus: ${columnPlus} | columnMinus: ${columnMinus}`);
 
         let leftAdj = `r${row}c${columnMinus}`;
         potentialAdjacentSqrs.push(leftAdj);
@@ -120,7 +120,7 @@ class GameConsole extends Component {
             // console.log(`bottomAdj: ${bottomAdj}`);
             // this.adjacentSquareCheck(bottomAdj, potentialAdjs);
             // newState.currAdjSquares = potentialAdjs;
-            
+
             return newState
         });
     }
@@ -144,8 +144,13 @@ class GameConsole extends Component {
     return (
         <div className='GameConsole'>
             <div className='GameConsole-title'>
-                <div className='GameConsole-title-card-1'>Lights</div>
-                <div className='GameConsole-title-card-2'>Out</div>
+                {/* <div className='GameConsole-title-card GameConsole-title-card-1'>Lights</div>
+                <div className='GameConsole-title-card GameConsole-title-card-2'>Out</div> */}
+                <div className='GameConsole-title-card'>
+                    <div className='GameConsole-title-card-content'>
+                        <span className='GameConsole-title-card-1'>Lights</span><span className='GameConsole-title-card-2'>Out</span>
+                    </div>
+                </div>
             </div>
             <div className='GameConsole-Display'>
                 {currentGameSquares}
