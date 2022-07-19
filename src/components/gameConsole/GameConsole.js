@@ -27,17 +27,20 @@ class GameConsole extends Component {
 
         for (let row = 1; row < limit; row++) {
             for (let col = 1; col < limit; col++) {
+
                 let sqrId = `r${row}c${col}`;
                 let keyValue = `${row}-${col}`;
-                // let isActive = sqrStatusValues[Math.floor(Math.random()*sqrStatusValues.length)];
                 let isActive;
+
                 let randomFactor = 1 - Math.random();
                 // console.log(`randomFactor => ${randomFactor}`);
+
                 if (randomFactor > this.props.isActiveProbability) {
                     isActive = true;
                 } else {
                     isActive = false;
                 }
+
                 board[sqrId] = {'sqrId': sqrId, 'keyValue': keyValue, 'row': row, 'column': col, 'isActive': isActive};
             }
         }
@@ -176,16 +179,12 @@ class GameConsole extends Component {
 
         let flipThese = [sqrId, ...adjSquares];
 
-        // let flipThese = [sqrId];
-
         let newGameBoardDetailsAndStatus = this.flipSwitch(flipThese);
 
         let newGameBoardDetails = newGameBoardDetailsAndStatus[0];
         let newGameStatus = newGameBoardDetailsAndStatus[1];
 
         // console.log(`Are you a winner? => ${newGameStatus.toString()}`);
-
-        // let isBoardWinner = this.isGameBoardClear();
 
         this.setState({gameBoardDetails: newGameBoardDetails, isWinner: newGameStatus});
         
@@ -205,11 +204,9 @@ class GameConsole extends Component {
 
   render() {
 
-        console.log(`rendering GameConsole...`);
+        // console.log(`rendering GameConsole...`);
 
         let currentGameBoard = this.generateGameBoardElements();
-
-        // let gameStatus = <div className='GameConsole-gameStatus'>WINNER!!!</div>
 
         let gameStatus = this.getWinnerStatus();
 
@@ -225,7 +222,6 @@ class GameConsole extends Component {
             <div className='GameConsole-Display'>
                 {this.state.isWinner ? gameStatus : currentGameBoard}
             </div>
-            {/* {gameStatus} */}
             <button onClick={this.resetGame} className='GameConsole-reset'>RESET GAME</button>
         </div>
     )

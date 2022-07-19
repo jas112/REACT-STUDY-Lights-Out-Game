@@ -16,12 +16,6 @@
     100%  {text-shadow: 0px 0px 15px #0195ff;-webkit-text-stroke-color: #0195ff30; box-shadow: 0px 0px 18px #0195ff20;}
 }
 
-/* @keyframes gameWinnerAnim {
-    0%   {text-shadow: 0px 0px 15px #ff4500;-webkit-text-stroke-color: #ff450030; box-shadow: 0px 0px 18px #ff450020;}
-    50%  {text-shadow: 0px 0px 25px #ff4500;-webkit-text-stroke-color: #ff4500; box-shadow: 0px 0px 24px #ff4500;}
-    100%  {text-shadow: 0px 0px 15px #ff4500;-webkit-text-stroke-color: #ff450030; box-shadow: 0px 0px 18px #ff450020;}
-} */
-
 @keyframes gameWinnerAnim-1 {
     0%   {text-shadow: 0px 0px 15px #ff4500;-webkit-text-stroke-color: #ff450030;}
     50%  {text-shadow: 0px 0px 25px #ff4500;-webkit-text-stroke-color: #ff4500;}
@@ -51,7 +45,6 @@
     flex-flow:row nowrap;
     justify-content: space-around;
     align-items: center;
-    /* border: 1px solid white; */
 }
 
 .GameConsole-title-card{
@@ -68,27 +61,22 @@
 
 .GameConsole-title-card-content{
     width: 100%;
-    /* border: 1px solid white; */
 }
 
 .GameConsole-title-card-1{
     width:auto;
     color: #ff4500;
-    /* display: inline-block; */
     -webkit-text-stroke-color: #ff4500;
     text-shadow: 0px 0px 25px #ff4500;
     animation: titleCard1Glow 1.5s infinite;
-    /* border: 1px solid #ff4500; */
 }
 
 .GameConsole-title-card-2{
     width:auto;
     color: #0195ff;
-    /* display: inline-block; */
     -webkit-text-stroke-color: #0195ff;
     text-shadow: 0px 0px 25px #0195ff;
     animation: titleCard2Glow 4s infinite;
-    /* border: 1px solid #0195ff; */
 }
 
 .GameConsole-Display{
