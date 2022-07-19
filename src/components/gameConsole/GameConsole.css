@@ -17,15 +17,15 @@
 }
 
 @keyframes gameWinnerAnim-1 {
-    0%   {text-shadow: 0px 0px 15px #ff4500;-webkit-text-stroke-color: #ff450030;}
-    50%  {text-shadow: 0px 0px 25px #ff4500;-webkit-text-stroke-color: #ff4500;}
-    100%  {text-shadow: 0px 0px 15px #ff4500;-webkit-text-stroke-color: #ff450030;}
+    0%   {text-shadow: 0px 0px 15px #ff4500;-webkit-text-stroke-color: #ff4500;font-size: 72px;}
+    50%  {text-shadow: 0px 0px 25px #ff4500;-webkit-text-stroke-color: #ff450030;font-size: 30px;}
+    100%  {text-shadow: 0px 0px 15px #ff4500;-webkit-text-stroke-color: #ff4500;font-size: 72px;}
 }
 
 @keyframes gameWinnerAnim-2 {
-    0%   {text-shadow: 0px 0px 15px #0195ff;-webkit-text-stroke-color: #0195ff30;}
-    50%  {text-shadow: 0px 0px 25px #0195ff;-webkit-text-stroke-color: #0195ff;}
-    100%  {text-shadow: 0px 0px 15px #0195ff;-webkit-text-stroke-color: #0195ff30;}
+    0%   {text-shadow: 0px 0px 15px #0195ff;-webkit-text-stroke-color: #0195ff30;font-size: 30px;}
+    50%  {text-shadow: 0px 0px 25px #0195ff;-webkit-text-stroke-color: #0195ff;font-size: 72px;}
+    100%  {text-shadow: 0px 0px 15px #0195ff;-webkit-text-stroke-color: #0195ff30;font-size: 30px;}
 }
 
 .GameConsole{

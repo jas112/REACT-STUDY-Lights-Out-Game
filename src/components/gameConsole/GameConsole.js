@@ -1,4 +1,3 @@
-import { toHaveStyle } from '@testing-library/jest-dom/dist/matchers';
 import React, { Component } from 'react';
 import GameSquare from '../gameSquare/GameSquare';
 import './GameConsole.css';
@@ -22,7 +21,6 @@ class GameConsole extends Component {
     generateBoard(){
 
         let limit = this.props.boardDimension + 1;
-        let sqrStatusValues = [true, false];
         let board = {};
 
         for (let row = 1; row < limit; row++) {
@@ -156,11 +154,11 @@ class GameConsole extends Component {
 
         arr.forEach(sqrId => {
 
-            let before = flipResults[sqrId].isActive;
+            // let before = flipResults[sqrId].isActive;
 
             flipResults[sqrId].isActive = !flipResults[sqrId].isActive;
 
-            let after = flipResults[sqrId].isActive;
+            // let after = flipResults[sqrId].isActive;
 
             // console.log(`flipping switch ... square ${sqrId} from: ${before} to: ${after}`);
 
@@ -178,6 +176,8 @@ class GameConsole extends Component {
         let adjSquares = this.determineAdjacents(sqrId);
 
         let flipThese = [sqrId, ...adjSquares];
+
+        // let flipThese = [sqrId];
 
         let newGameBoardDetailsAndStatus = this.flipSwitch(flipThese);
 
