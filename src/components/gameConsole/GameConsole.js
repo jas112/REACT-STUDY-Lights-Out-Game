@@ -14,9 +14,6 @@ class GameConsole extends Component {
         this.state = {
             gameBoardDetails: this.generateBoard(),
             isWinner: false,
-            isLoser: false,
-            isGameOver: false,
-            isCurrentSqr: false,
         }
         this.registerGameMove = this.registerGameMove.bind(this);
         this.resetGame = this.resetGame.bind(this);
@@ -53,9 +50,7 @@ class GameConsole extends Component {
 
         let registry = Object.keys(this.state.gameBoardDetails);
         let sqrDimension = (100/this.props.boardDimension) - 3;
-        // console.log(`boardDimension | sqrDimension => ${this.state.boardDimension} | ${sqrDimension}`);
-        // console.log(`generateGameBoardElements registry: ${registry}`);
-        // console.log(`generateGameBoardElements gBoard: ${JSON.stringify(gBoard)}`);
+
         let gameSquares = registry.map(sqr => (
             <GameSquare
                 key={this.state.gameBoardDetails[sqr].keyValue}
@@ -79,9 +74,21 @@ class GameConsole extends Component {
             }
         });
 
-        console.log(`adjacentSqrs: ${adjacentSqrs}`);
+        // console.log(`adjacentSqrs: ${adjacentSqrs}`);
 
         return adjacentSqrs;
+    }
+
+    getWinnerStatus(){
+        return (
+            <div>
+                <div className='GameConsole-gameStatus GameConsole-winner-ff4500'>WINNER!!!</div>
+                <div className='GameConsole-gameStatus GameConsole-winner-0195ff'>WINNER!!!</div>
+                <div className='GameConsole-gameStatus GameConsole-winner-ff4500'>WINNER!!!</div>
+                <div className='GameConsole-gameStatus GameConsole-winner-0195ff'>WINNER!!!</div>
+            </div>
+            
+        )
     }
 
     determineAdjacents(sqrId){
@@ -118,6 +125,28 @@ class GameConsole extends Component {
 
     }
 
+    isGameBoardClear(gameboard){
+
+        let markerTotal = 0;
+        let targetValue = Object.keys(gameboard).length;
+
+        // console.log(`targetValue => ${targetValue}`);
+
+        for (const sqr in gameboard) {
+            if (!gameboard[sqr].isActive) {
+                markerTotal+=1; 
+                // console.log(`markerTotal => ${markerTotal}`);
+            }
+        }
+
+        if (markerTotal === targetValue) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     flipSwitch(arr){
 
         let flipResults = {...this.state.gameBoardDetails};
@@ -130,24 +159,35 @@ class GameConsole extends Component {
 
             let after = flipResults[sqrId].isActive;
 
-            console.log(`flipping switch ... square ${sqrId} from: ${before} to: ${after}`);
+            // console.log(`flipping switch ... square ${sqrId} from: ${before} to: ${after}`);
 
         });
 
-        return flipResults;
+        let gameStatus = this.isGameBoardClear(flipResults);
+
+        return [flipResults, gameStatus];
     }
 
     registerGameMove(sqrId){
         
-        console.log(`Game move detected... you clicked: ${sqrId}`);
+        // console.log(`Game move detected... you clicked: ${sqrId}`);
 
         let adjSquares = this.determineAdjacents(sqrId);
 
         let flipThese = [sqrId, ...adjSquares];
 
-        let newGameBoardDetails = this.flipSwitch(flipThese);
+        // let flipThese = [sqrId];
 
-        this.setState({gameBoardDetails: newGameBoardDetails});
+        let newGameBoardDetailsAndStatus = this.flipSwitch(flipThese);
+
+        let newGameBoardDetails = newGameBoardDetailsAndStatus[0];
+        let newGameStatus = newGameBoardDetailsAndStatus[1];
+
+        // console.log(`Are you a winner? => ${newGameStatus.toString()}`);
+
+        // let isBoardWinner = this.isGameBoardClear();
+
+        this.setState({gameBoardDetails: newGameBoardDetails, isWinner: newGameStatus});
         
     }
 
@@ -158,9 +198,6 @@ class GameConsole extends Component {
 
             newState.gameBoardDetails = this.generateBoard();
             newState.isWinner = false;
-            newState.isLoser = false;
-            newState.isGameOver = false;
-            newState.isCurrentSqr = false;
 
             return newState;
         });
@@ -172,6 +209,10 @@ class GameConsole extends Component {
 
         let currentGameBoard = this.generateGameBoardElements();
 
+        // let gameStatus = <div className='GameConsole-gameStatus'>WINNER!!!</div>
+
+        let gameStatus = this.getWinnerStatus();
+
     return (
         <div className='GameConsole'>
             <div className='GameConsole-title'>
@@ -182,8 +223,9 @@ class GameConsole extends Component {
                 </div>
             </div>
             <div className='GameConsole-Display'>
-                {currentGameBoard}
+                {this.state.isWinner ? gameStatus : currentGameBoard}
             </div>
+            {/* {gameStatus} */}
             <button onClick={this.resetGame} className='GameConsole-reset'>RESET GAME</button>
         </div>
     )
